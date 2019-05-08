@@ -26,7 +26,7 @@ public class TeamInfo implements Serializable
      * Actually that many players in each team need to be sent, even if
      * playersPerTeam in GameControlData is less.
      */
-    public static final byte MAX_NUM_PLAYERS = 11;
+    public static final byte MAX_NUM_PLAYERS = 6;
     
     /** The size in bytes this class has packed. */
     public static final int SIZE =
@@ -35,9 +35,9 @@ public class TeamInfo implements Serializable
             1 + // score
             1 + // penaltyShot
             2 + // singleShots
-            1 + // coach's sequence number
-            SPLCoachMessage.SPL_COACH_MESSAGE_SIZE + // coach's message
-            (MAX_NUM_PLAYERS + 1) * PlayerInfo.SIZE; // +1 for the coach
+//            1 + // coach's sequence number
+//            SPLCoachMessage.SPL_COACH_MESSAGE_SIZE + // coach's message
+            (MAX_NUM_PLAYERS) * PlayerInfo.SIZE;
 
     //this is streamed
     public byte teamNumber;                                         // unique team number
@@ -77,9 +77,9 @@ public class TeamInfo implements Serializable
         buffer.put(score);
         buffer.put(penaltyShot);
         buffer.putShort(singleShots);
-        buffer.put(coachSequence);
-        buffer.put(coachMessage);
-        buffer.put(coach.toByteArray());
+//        buffer.put(coachSequence);
+//        buffer.put(coachMessage);
+//        buffer.put(coach.toByteArray());
         for (int i=0; i<MAX_NUM_PLAYERS; i++) {
             buffer.put(player[i].toByteArray());
         }
@@ -100,9 +100,9 @@ public class TeamInfo implements Serializable
         score = buffer.get();
         penaltyShot = buffer.get();
         singleShots = buffer.getShort();
-        coachSequence = buffer.get();
-        buffer.get(coachMessage);
-        coach.fromByteArray(buffer);
+//        coachSequence = buffer.get();
+//        buffer.get(coachMessage);
+//        coach.fromByteArray(buffer);
         for (int i=0; i<player.length; i++) {
             player[i].fromByteArray(buffer);
         }
